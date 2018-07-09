@@ -1,0 +1,17 @@
+Source: dhcpcd
+Section: net
+Priority: optional
+Build-Depends: debhelper (>>2.0.0)
+Maintainer: Simon Kelley <simon@thekelleys.org.uk>
+Standards-Version: 3.7.3
+
+Package: dhcpcd
+Architecture: any
+Depends: ${shlibs:Depends}, bsdutils (>=2.11n), procps
+Replaces: dhcpcd-sv
+Conflicts: dhcpcd-sv, ifupdown (<< 0.6.4-4)
+Description: DHCP client for automatically configuring IPv4 networking
+ Simple configuration: supports executions of a script when the 
+ IP address changes.
+ 
+

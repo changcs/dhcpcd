@@ -1,0 +1,30 @@
+.\" $Id$
+.\"
+.TH dhcpcd 8 "13 May 2004" "dhcpcd" "Debian GNU/Linux"
+
+.SH NAME
+dhcpcd \- a wrapper for the DHCP client daemon.
+.SH SYNOPSIS
+.B dhcpcd <option> <interface>
+
+.SH DESCRIPTION
+In Debian, the DHCP client daemon binary is called dhcpcd-bin and it is invoked via a wrapper called dhcpcd. Dhcpcd is normally invoked by 
+.BR ifup (8) 
+but ifup only allows the setting of a limited number of dhcpcd command line flags. The dhcpcd wrapper reads extra flags from /etc/default/dhcpcd and then invokes 
+.BR dhcpcd-bin (8)
+It also adds the hostname as an argument to the command line, unless
+it is already set by ifup or /etc/default/dhcpcd or SET_HOSTNAME is
+configured. In that case there is no point in sending the old
+hostname with the DHCP request when it will be overridden by a new
+name supplied by the DHCP server. 
+.PP
+Note that the interface argument must be supplied, there is no default
+to eth0 like the unadorned dhcpcd binary.
+.SH SEE ALSO
+.BR ifup (8)
+.BR dhcpcd-bin (8)
+
+.SH AUTHORS
+.LP
+Simon Kelley <srk@thekelleys.org.uk>
+

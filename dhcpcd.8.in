@@ -1,0 +1,371 @@
+.\" Copyright 2006-2008 Roy Marples
+.\" All rights reserved
+.\"
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions
+.\" are met:
+.\" 1. Redistributions of source code must retain the above copyright
+.\"    notice, this list of conditions and the following disclaimer.
+.\" 2. Redistributions in binary form must reproduce the above copyright
+.\"    notice, this list of conditions and the following disclaimer in the
+.\"    documentation and/or other materials provided with the distribution.
+.\"
+.\" THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+.\" SUCH DAMAGE.
+.\"
+.Dd Feb 20, 2008
+.Dt DHCPCD 8 SMM
+.Sh NAME
+.Nm dhcpcd
+.Nd an RFC 2131 compliant DHCP client
+.Sh SYNOPSIS
+.Nm
+.Op Fl dknpAEGHMLNRSTY
+.Op Fl c , -script Ar script
+.Op Fl h , -hostname Ar hostname
+.Op Fl i , -classid Ar classid
+.Op Fl l , -leasetime Ar seconds
+.Op Fl m , -metric Ar metric
+.Op Fl r , -request Ar address
+.Op Fl t , -timeout Ar seconds
+.Op Fl u , -userclass Ar class
+.Op Fl F , -fqdn Ar FQDN
+.Op Fl I , -clientid Ar clientid
+.Op Fl P , -pidfile Ar pidfile
+.Ar interface
+.Nm
+.Fl k , -release
+.Ar interface
+.Nm
+.Fl x , -exit
+.Ar interface
+.Sh DESCRIPTION
+.Nm
+is an implementation of the DHCP client specified in
+.Rs
+.%T "RFC 2131"
+.Re
+.Nm
+gets the host information
+.Po 
+IP address, routes, etc
+.Pc
+from a DHCP server and configures the network
+.Ar interface
+of the
+machine on which it is running. 
+.Nm
+will then write DNS information to
+.Xr resolvconf 8 ,
+if available, otherwise directly to
+.Pa /etc/resolv.conf .
+.Nm
+will also configure
+.Pa /etc/yp.conf
+and
+.Pa /etc/ntpd.conf
+with NIS and NTP information if the DHCP server provided them.
+If those file contents changed, then
+.Nm
+will also attempt to restart the respective services to notify them of the
+change.
+If the hostname is currenly blank, (null) or localhost then
+.Nm
+will set the hostname to the one supplied by the DHCP server, or look it up
+in DNS if none supplied.
+.Nm
+then daemonises and waits for the lease renewal time to lapse.
+Then it attempts to renew its lease and reconfigure if the new lease changes.
+.Ss Local Link configuration
+If
+.Nm
+failed to obtain a lease, it will probe for a valid IPv4LL address
+.Po
+aka Zeroconf, aka APIPA
+.Pc .
+Once obtained it will probe every 10 seconds for a DHCP server to get a
+proper address.
+.Pp
+Even when
+.Nm
+obtains a proper lease, it will still add a Local Link route
+.Po
+165.254.0.0/16
+.Pc
+so that the host can communicate with clients using these addresses.
+.Pp
+When using IPv4LL,
+.Nm
+will always succeed and return a 0 exit code. To disable this behaviour, you
+can use the
+.Fl L , -noipv4ll
+option.
+.Ss Hooking into DHCP events
+.Nm
+will run @PREFIX@/etc/dhcpcd.sh, or the script specified by the
+.Fl c , -script
+option. It will set $1 to a shell compatible file that holds various
+configuration settings obtained from the DHCP server and $2 to either
+up, down or new depending on the state of
+.Nm .
+.Nm
+ignores the exist code of the script.
+.Ss Fine tuning
+You can fine tune the behaviour of
+.Nm
+with the following options :-
+.Bl -tag -width indent
+.It Fl d , -debug
+Echo debug and informational messages to the console.
+Subsequent debug options stop
+.Nm
+from daemonising.
+.It Fl h , -hostname Ar hostname
+By default,
+.Nm
+will send the current hostname to the DHCP server so it can register in DNS.
+You can use this option to specify the
+.Ar hostname
+sent, or an empty string to
+stop any
+.Ar hostname
+from being sent.
+.It Fl i , -classid Ar classid
+Override the DHCP vendor
+.Ar classid
+field we send. The default is
+dhcpcd-<version>.
+.It Fl k , -release
+This causes an existing
+.Nm
+process running on the
+.Ar interface
+to release it's lease, deconfigure the
+.Ar interface
+and then exit.
+.It Fl l , -leasetime Ar seconds
+Request a specific lease time in
+.Ar seconds .
+By default
+.Nm
+does not request any lease time and leaves the it in the hands of the
+DHCP server.
+.It Fl m , -metric Ar metric
+Added routes will use the
+.Ar metric
+on systems where this is supported
+.Po
+presently only Linux
+.Pc .
+Route metrics allow the addition of routes to the same destination across
+different interfaces, the lower the metric the more it is preferred.
+.It Fl n , -renew
+Notifies an existing
+.Nm
+process running on the
+.Ar interface
+to renew it's lease. If
+.Nm
+is not running, then it starts up as normal.
+.It Fl p , -persistent
+.Nm
+normally deconfigures the
+.Ar interface
+and configuration when it exits.
+Sometimes, this isn't desirable if for example you have root mounted over NFS.
+You can use this option to stop this from happening.
+.It Fl r , -request Op Ar address
+.Nm
+normally sends a DHCP Broadcast to find servers to offer an address.
+.Nm
+will then request the address used. You can use this option to skip the
+broadcast step and just request an
+.Ar address .
+The downside is if you request
+an
+.Ar address
+the DHCP server does not know about or the DHCP server is not
+authorative, it will remain silent. In this situation, we go back to the init
+state and broadcast again.
+If no
+.Ar address
+is given then we use the first address currently assigned to the
+.Ar interface .
+.It Fl s , -inform Op Ar address Op / Ar cidr
+Behaves exactly like
+.Fl r , -request
+as above, but sends a DHCP inform instead of a request. This requires the
+interface to be configured first. This does not get a lease as such, just
+notifies the DHCP server of the
+.Ar address
+we are using.
+.It Fl t , -timeout Ar seconds
+Timeout after
+.Ar seconds ,
+instead of the default 20.
+A setting of 0
+.Ar seconds
+causes
+.Nm
+to wait forever to get a lease.
+.It Fl u , -userclass Ar class
+Tags the DHCP message with the userclass
+.Ar class .
+DHCP servers use this give memebers of the class DHCP options other than the
+default, without having to know things like hardware address or hostname.
+.If Fl F , -fqdn Ar fqdn
+Requests that the DHCP server updates DNS using FQDN instead of just a
+hostname. Valid values for
+.Ar fqdn
+are none, ptr and both.
+.Nm
+dhcpcd itself never does any DNS updates.
+.It Fl H , --sethostname
+Forces
+.Nm
+to set the hostname as supplied by the DHCP server. Because some OS's and users
+prefer to have just the hostname, or the full FQDN more
+.Fl H , --sethostname
+options change the behaviour. Below is the list of possible combinations:-
+.Bl -tag -width indent
+.It Fl H
+set the hostname to the full FQDN.
+.It Fl HH
+strip the domain if it matches the dns domain.
+.It Fl HHH
+strip the domain regardless.
+.It Fl HHHH
+same as
+.Fl H
+but force hostname lookup via DNS.
+.It Fl HHHHH
+same as above, but strip the domain if it matches the dns domain.
+.It Fl HHHHHH
+same as above, but strip the domain regardless.
+.El
+.It Fl I , -clientid Ar clientid
+Send
+.Ar clientid
+as a client identifier string. If
+.Ar clientid
+matches a hardware address format, such as 01:00:01:02:03:04:05 then we encode
+it as that, otherwise as a string. You need to specify the hardware type in
+the first byte. Ethernet is 01, and the hardware address in the example is
+00:01:02:03:04:05. If the
+.Ar clientid
+is a blank string, then we disable DUID support and use a
+.Ar clientid
+as shown above.
+.It Fl S, -mscsr
+Microsoft have their own code for Classless Static Routes
+.Po
+RFC 3442
+.Pc .
+You can use this option to request this as well as the normal CSR. Another
+instace of this option only requests the Microsoft CSR to prevent DHCP message
+over-running its maximum size. DHCP server administrators should update their
+CSR code from the Microsoft specific one to the RFC compliant one as the
+content is fully compatible.
+.It Fl P, -pidfile Ar filename
+Write the PID to
+.Ar filename
+instead of
+.Nm /var/run/dhcpcd- Ns Ar interface Ns Nm .pid.
+.El
+.Ss Restriciting behaviour
+.Nm
+will try to do as much as it can by default. However, there are sometimes
+situations where you don't want the things to be configured exactly how the
+the DHCP server wants. Here are some option that deal with turning these bits
+off.
+.Bl -tag -width indent
+.It Fl A , -noarp
+Don't request or claim the address by ARP.
+.It Fl G , -nogateway
+Don't set any default routes.
+.It Fl L , -noipv4ll
+Don't use IPv4LL at all.
+.It Fl M , -nomtu
+Don't set the MTU of the
+.Ar interface .
+.It Fl N , -nontp
+Don't touch
+.Pa /etc/ntpd.conf
+or restart the ntp service.
+.It Fl R , -nodns
+Don't send DNS information to resolvconf or touch
+.Pa /etc/resolv.conf .
+.It Fl T , -test
+On receipt of discover messages, simply print the contents of the DHCP
+message to the console.
+.Nm
+will not configure the
+.Ar interface ,
+touch any files or restart any services.
+.It Fl Y , -nonis
+Don't touch
+.Pa /etc/yp.conf
+or restart the ypbind service.
+.El
+.Sh NOTES
+Because
+.Nm
+supports InfiniBand, we put a Node-specific Client Identifier in the
+ClientID field. This is required by RFC 4390. It's also required for DHCP IPv6
+which
+.Nm
+should support one day. However, some DHCP servers have no idea what this is
+and reject the message as they do not understand type 255. This is not
+conformant with RFC 2132 and the server should be fixed. Also, some DHCP
+server configurations require an ethernet hardware address of 6 hexacdecimal
+numbers in the ClientID which is the default behaviour of most other DHCP
+clients. If your DHCP server is as desribed above, you should fix the server,
+or if that is not an option you can compile DUID support out of
+.Nm
+or use the
+.Fl I , -clientid Ar clientid
+option and set
+.Ar clientid
+to ''.
+.Pp
+ISC dhcpd, dnsmasq, udhcpd and Microsoft DHCP server 2003 default configurations
+work just fine with the default
+.Nm
+configuration.
+.Pp
+.Nm
+requires a Berkley Packet Filter, or BPF device on BSD based systems and a
+Linux Socket Filter, or LPF device on Linux based systems.
+.Sh FILES
+.Bl -ohang
+.It Pa @PREFIX@/etc/dhcpcd.sh
+Bourne shell script that is run when we configure or deconfigure an interface.
+.It Pa @INFODIR@/dhcpcd.duid
+Text file that holds the DUID used to identify the host.
+.It Pa @INFODIR@/dhcpcd- Ns Ar interface Ns .info
+Bourne shell file that holds the DHCP values used in configuring the interface.
+This path is passed as the first argument to
+.Pa @PREFIX@/etc/dhcpcd.sh .
+.El
+.Sh SEE ALSO
+.Xr ntp 1 ,
+.Xr resolv.conf 5 ,
+.Xr resolvconf 8 ,
+.Xr yp.conf 5 ,
+.Xr ypbind 8
+.Sh STANDARDS
+RFC 2131, RFC 2132, RFC 2855, RFC 3004, RFC 3361, RFC 3397, RFC 3442, RFC 3927,
+RFC 4361, RFC 4390, RFC 4702.
+.Sh AUTHORS
+.An "Roy Marples" Aq roy@marples.name
+.Sh BUGS
+Please report them to http://bugs.marples.name

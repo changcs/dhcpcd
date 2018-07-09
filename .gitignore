@@ -1,0 +1,5 @@
+*.o
+version.h
+dhcpcd
+dhcpcd.8
+dhcpcd-*.bz2

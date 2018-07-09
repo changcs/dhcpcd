@@ -1,0 +1,541 @@
+dhcpcd (1:3.2.3-11+deb7u1) oldstable-security; urgency=high
+
+  * Fix CVE-2012-6698, CVE-2012-6699, CVE-2012-6700,
+    out-of-bound reads/writes and use-after-free issues with specially
+    crafted DHCP messages.
+    This is a forward port of the patch applied to squeeze-lts since
+    wheezy uses the same upstream version. (LP: #1517226)
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 27 Mar 2016 15:47:43 +0200
+
+dhcpcd (1:3.2.3-11) unstable; urgency=high
+
+    * Security fix, remote stack overflow: CVE-2012-2152. (closes: #671265)
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Thu, 3 May 2012 14:03:12 +0000
+
+dhcpcd (1:3.2.3-10) unstable; urgency=low
+
+    * Fix inhibit-duid/duid-inhibit confusion in README.
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Thu, 26 Jan 2012 21:04:22 +0000
+
+dhcpcd (1:3.2.3-9) unstable; urgency=low
+
+    * Fix double-free crash. (closes: #632164)
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Thu, 30 Jun 2011 21:04:22 +0000
+
+dhcpcd (1:3.2.3-8) unstable; urgency=low
+
+    * Add --pidfile argument. (closes: #532100)
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon, 14 Feb 2011 21:19:12 +0000
+
+dhcpcd (1:3.2.3-7) unstable; urgency=low
+
+    * Fix FTBFS on GNU/kFreeBSD. (closes: #594661)
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Tue, 31 Aug 2010 21:24:13 +0000
+
+dhcpcd (1:3.2.3-6) unstable; urgency=low
+
+    * Make /sbin/dhcpcd and /usr/share/man/man8/dhcpcd.8 managed 
+    *    as alternatives, to allow co-existance with dhcpcd5.
+    * Correctly handle multiple options in wrapper script. (closes: #577846)
+    * Don't override CFLAGS in the build system. (closes: #571183)
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Thu, 19 Aug 2010 20:41:13 +0000
+
+dhcpcd (1:3.2.3-5) unstable; urgency=low
+
+    * Remove conflict with dhcp3-client. (closes: #563627)
+    
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon, 4 Jan 2010 16:37:13 +0000
+
+dhcpcd (1:3.2.3-4) unstable; urgency=low
+
+    * Comment out dodgy declaration of __u64.  (closes: #544679)
+    * Conflict with dhcp3-client. (closes: #485484)
+    * Fix location of config file in dhcpcd man page. (closes: #485483)
+    * Allow spaces in OPTIONS. (closes: #534561)
+    * Remove obsolete pid-file management from wrapper 
+      script, since dhcpcd-3 doesn't require it. (closes: #536864)
+    
+ -- Simon Kelley <simon@thekelleys.org.uk>  Tue, 17 Nov 2009 21:00:12 +0100
+
+dhcpcd (1:3.2.3-3) unstable; urgency=low
+
+    * Fix wrong variable used for domain in dhcpcd.sh (closes: #512296)
+    
+ -- Simon Kelley <simon@thekelleys.org.uk>  Thu, 29 Jan 2009 20:49:18 +0100
+
+dhcpcd (1:3.2.3-2) unstable; urgency=low
+
+    * Patched to use correct MAC address in DHCP renewal requests.
+    *	(closes: #502191)
+    
+ -- Simon Kelley <simon@thekelleys.org.uk>  Tue, 14 Oct 2008 20:33:38 +0100
+	
+dhcpcd (1:3.2.3-1.1) unstable; urgency=medium
+
+    * Non-maintainer upload.
+    * Fix bashism in preinst maintainer script (Closes: #473515)
+    * Bump Standards-Version to 3.7.3.
+
+ -- Chris Lamb <chris@chris-lamb.co.uk>  Sat, 12 Apr 2008 03:50:59 +0100
+
+dhcpcd (1:3.2.3-1) unstable; urgency=low
+
+    * New upstream.
+    * Restore lost changelog (closes: #467083)
+    * Fix FTBFS on GNU/kFreeBSD. (closes: #467005)
+					
+ -- Simon Kelley <simon@thekelleys.org.uk>  Wed, 27 Feb 2008 12:06:38 +0100
+
+dhcpcd (1:3.2.2-1) unstable; urgency=low
+
+    * New upstream.
+    * Add /etc/dhcpc/duid-inhibit logic. 
+					
+ -- Simon Kelley <simon@thekelleys.org.uk>  Thu, 21 Feb 2008 20:14:58 +0100
+
+dhcpcd (1:3.0.17-2) unstable; urgency=low
+
+    * Remove SET_DOMAIN option: this has been non-functional for
+      serveral years, but on 3.0.x, setting causes dhcpcd to fail
+      at startup. (closes: #419868)
+					
+ -- Simon Kelley <simon@thekelleys.org.uk>  Wed, 18 Apr 2007 13:34:28 +0100
+
+dhcpcd (1:3.0.17-1) unstable; urgency=low
+
+    * New upstream.
+    * Handle change of lease-change script from /etc/dhcpc/dhcpcd.exe 
+      to /etc/dhcpcd.sh and the config file from /etc/dhcpc/config
+      to the more standards-conforming /etc/default/dhcpcd
+    * Apply patch from SVN to make .info file compatible with old scripts.
+				
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sat, 14 Apr 2007 17:41:32 +0100
+
+dhcpcd (1:2.0.3-1) unstable; urgency=low
+
+    * New upstream.
+				
+ -- Simon Kelley <simon@thekelleys.org.uk>  Fri, 10 Mar 2006 21:43:11 +0100
+
+dhcpcd (1:2.0.2-1) unstable; urgency=low
+
+    * New upstream.
+				
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon, 28 Feb 2006 11:53:41 +0100
+
+dhcpcd (1:2.0.1-1) unstable; urgency=low
+
+    * New upstream.
+    * Fixed various lintian warnings.
+				
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon, 23 Jan 2006 20:55:11 +0100
+
+dhcpcd (1:2.0.0-2) unstable; urgency=low
+
+    * Clear out /etc/dhcpc/resolv.conf and /var/lib/dhcpc/* 
+      during purge. (closes: #330515)
+			
+ -- Simon Kelley <simon@thekelleys.org.uk>  Thur, 29 Sep 2005 26:21:51 +0100
+
+dhcpcd (1:2.0.0-1) unstable; urgency=low
+
+    * New upstream: the previous upstream maintainer went MIA, so the
+      2.x.x series is a fork. It merges everthing relevant from the Debian
+      and Gentoo packages. From the Debian point of view, the changes 
+      are therefore the things imported from Gentoo. These are the 
+      -F -e and -m options.
+		
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sat, 23 July 2005 21:55:11 +0100
+
+dhcpcd (1:1.3.22pl4-22) unstable; urgency=low
+
+    * Gut the preinst and postinst scripts. Now that Sarge is
+      released, we no longer need to carry baggage for upgrading from
+      potato.
+    * Add a comment to /etc/dhcpc/config in attempt to avoid confusion
+      over which interface it applies to. (closes: #311495)
+    * Fix the value of the "Maximum message size" option. This value
+      includes the IP and UDP headers, and it's minium value is therefore
+      576, according to RFC2131.	
+    * Fix a security hole. A malformed DHCP packet could crash dhcpcd.
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon, 27 Jun 2005 21:23:21 +0100
+
+dhcpcd (1:1.3.22pl4-21) unstable; urgency=low
+
+    * Fixed my juvenile shell scripting to cope with arguments with 
+      spaces in them. (closes: #300897)
+
+ -- Simon Kelley <simon@thekelleys.org.uk>  Wed, 23 Mar 2005 14:30:34 +0000
+
+dhcpcd (1:1.3.22pl4-20) unstable; urgency=low
+
+    * Added -p option, for use with NFS-root.
+    * Made -t 0 work to disable timeouts entirely.
+    * Fixed the wrapper script so that is doesn't send the hostname
+      if one is hardcoded in the /etc/dhcpc/config.
+
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sat, 11 Dec 2004 19:13:12 +0000
+
+dhcpcd (1:1.3.22pl4-19) unstable; urgency=low
+
+    * Don't run the dhcpc.exe script when timing out or 
+      exiting before any lease info is available. (closes: #283516)
+
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon, 29 Nov 2004 21:13:12 +0000
+
+dhcpcd (1:1.3.22pl4-18) unstable; urgency=low
+
+    * Added rfc3397 support. (closes: #274309)
+
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sat, 10 Oct 2004 19:13:12 +0000
+
+dhcpcd (1:1.3.22pl4-17) unstable; urgency=low
+
+    * Changed dhcpcd wrapper script to bash. (closes: #269846)
+
+    * Tweaked dhcpcd.exe. (closes: #269847)
+		
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sat, 4 Sep 2004 12:11:10 +0000
+
+dhcpcd (1:1.3.22pl4-16) unstable; urgency=low
+
+    * Improved argument checking of dhcpcd wrapper script.
+
+    * Fix bug in code to determine if we send the hostname in 
+      a DHCP request in the dhcpcd wrapper script. (closes: #268181)
+
+    * Add "search" directive to /etc/dhcpc/resolv.conf when domain
+      returned in DHCP lease. (closes: #268011)
+
+    * Tweak comments in config file. (closes: #268009)
+		
+ -- Simon Kelley <simon@thekelleys.org.uk>  Thur, 2 Sep 2004 20:31:20 +0000
+
+dhcpcd (1:1.3.22pl4-15) unstable; urgency=low
+
+    * Don't exit with an error when calling dhcpcd -k and the process
+      is not running, since this is probably because dhcpcd obtained
+      an infinite lease and exited. Returning an error stops ifdown from
+      taking the interface down in that case. (closes  #258641)
+
+    * Reworded man page section on "-k" (closes #253107).
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Wed, 4 Aug 2004 21:31:20 +0000
+
+dhcpcd (1:1.3.22pl4-14) unstable; urgency=low
+
+    * Remove prerm script entirely, since it tries to clean up
+      files which don't exist and fails to stop the daemon correctly
+      when it is running on an interface other than eth0. (closes: #253107)
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Wed, 8 Jul 2004 21:01:20 +0000
+
+dhcpcd (1:1.3.22pl4-13) unstable; urgency=low
+
+    * Add dependency on procps. (closes: #250650)
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sun, 30 May 2004 18:02:10 +0000
+
+dhcpcd (1:1.3.22pl4-12) unstable; urgency=low
+
+    * Change dependency on ifupdown into a conflict with old 
+      ifupdown verions. As a consequence, now need to check if
+      ifupdown in installed in postinst before mangling 
+      /etc/network/interfaces. (closes: #249428)
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Tue, 18  May 2004 19:19:20 +0000
+
+dhcpcd (1:1.3.22pl4-11) unstable; urgency=low
+
+    * Send the current hostname with the DHCP request, unless overridden.
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Thur, 13  May 2004 22:29:10 +0000
+
+dhcpcd (1:1.3.22pl4-10) unstable; urgency=low
+
+    * Fixed default location of dhcpcd.exe file, which got moved 
+      to /var/lib/dhcpc by accident.
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Tue, 6  Jan 2004 20:19:00 +0000
+
+dhcpcd (1:1.3.22pl4-9) unstable; urgency=low
+
+    * Included Thomas Hood's rewrite of the README (closes: #203165)
+    * Updated postinst to reflect changed syntax of
+      /etc/network/interfaces in later versions. (closes: #203176)
+    * Changed dependency on ifupdown from pre-depends: to 
+      depends: which is sufficient as it ensures that ifupdown
+      is functional before the dhcpcd postinst script is run.
+
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon, 8  Sep 2003 21:22:05 +0000
+	
+dhcpcd (1:1.3.22pl4-8) unstable; urgency=low
+  
+    * Tweaked Conflicts: (closes: #196485)
+    * Use safe tests in the wrapper script. (closes: #197624)
+    * Move *cache *and *info files from /etc/dhcpc to /var/lib/dhcpc
+      to facilitate machines without writable root filesystems.
+      /etc/dhcpc/resolv.conf becomes a link to /var/lib/dhcpc/resolv.conf
+      for the same reason.
+    * Tweaked pre-depends to avoid needless conflicts when installing 
+      on woody.
+    * Added version to bsdutils dependency and updated copyright, both
+      to please lintian.
+	
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sat, 26 Jul 2003 15:32:59 +0000
+
+dhcpcd (1:1.3.22pl4-7) unstable; urgency=low
+  
+    * Added support for resolvconf package in dhcpcd.exe
+     
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon, 23 Jun 2003 19:54:43 +0000
+
+dhcpcd (1:1.3.22pl4-6) unstable; urgency=high
+  
+    * Check for symbolic links before using readlink
+      in postinst. (closes: #184043)
+     
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sun,  9 Mar 2003 10:26:46 +0000
+
+dhcpcd (1:1.3.22pl4-5) unstable; urgency=low
+  
+    * Fix /etc/dhcpcd.exe to cope with more than two DNS servers.
+     
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sat,  8 Mar 2003 12:35:16 +0000
+
+dhcpcd (1:1.3.22pl4-4) unstable; urgency=high
+  
+    * Fix typo in /etc/dhcpcd.exe (closes: #182631)
+     
+ -- Simon Kelley <simon@thekelleys.org.uk>  Thur,  27 Feb 2003 07:46:06 +0000
+
+dhcpcd (1:1.3.22pl4-3) unstable; urgency=low
+  
+    * Allow wlan interfaces in dhcpcd.exe. (closes: #182046)
+    * Provide dhcp-client virtual package. (closes: #178962)
+     
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon,  24 Feb 2003 21:14:07 +0000
+
+dhcpcd (1:1.3.22pl4-2) unstable; urgency=low
+  
+    * Fix stupid automake mess-up which stops autobuilders.
+     
+ -- Simon Kelley <simon@thekelleys.org.uk>  Tue,  28 Jan 2003 23:23:05 +0000
+
+dhcpcd (1:1.3.22pl4-1) unstable; urgency=low
+  
+    * New upstream.
+    * Check for existance of hostinfo file in dhcpcd.exe; this
+    * may be missing if the first ever invokation of DHCPCD fails.
+     
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon,  27 Jan 2003 17:23:48 +0000
+
+dhcpcd (1:1.3.22pl3-2) unstable; urgency=low
+  
+    * make /etc/dhcpcd.exe a bash script (closes: #169688).
+      
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sun,  24 Nov 2002 20:52:18 +0000
+
+dhcpcd (1:1.3.22pl3-1) unstable; urgency=low
+  
+    * New upstream.
+    * Set perms on /etc/dhcpc/resolv.conf to 644 (closes: #167364).
+    * Remove gcc arch flags in configure.in so that i386 binaries
+      really run on 386-and-up.
+    
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sat,  23 Nov 2002 21:03:25 +0000
+
+dhcpcd (1:1.3.22pl2-2) unstable; urgency=low
+  
+    * Updated config.guess, config.sub and missing with files
+      from automake 1.4-p6-2. (closes: #162854)
+  
+ -- Simon Kelley <simon@thekelleys.org.uk>  Mon,  30 Sept 2002 15:27:23 +0100
+
+dhcpcd (1:1.3.22pl2-1) unstable; urgency=low
+  
+    * New upstream.
+    * Do careful check for stale pid files on startup. (closes: #161997)
+  
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sun,  29 Sept 2002 18:55:17 +0100
+  
+dhcpcd (1:1.3.22pl1-4) unstable; urgency=high
+
+    * Removed shopt command from preinst - not required (closes: #153452)
+    * Added code to automatically copy enough configuration
+      on upgrade to keep the machine on the net. (closes: #153293)
+      Detailed change as follows.
+      1) No longer stop existing daemon in preinst, instead copy config file
+         for use in postinst.
+      2) In postinst update /etc/network/interfaces, then stop old daemon, 
+         then run ifup on the interface.
+      3) Change depends to pre-depends on ifupdown, since it has to be
+         functional for the above to work.
+  
+ -- Simon Kelley <simon@thekelleys.org.uk>  Wed,  17 Jul 2002 23:09:14 +0100
+
+dhcpcd (1:1.3.22pl1-3) unstable; urgency=low
+
+    * Updated config.guess and config.sub (closes: #152623)
+    
+ -- Simon Kelley <simon@thekelleys.org.uk>  Sun,  15 Jul 2002 22:15:09 +0100
+
+dhcpcd (1:1.3.22pl1-2) unstable; urgency=high
+
+    * Added build-depends for debhelper (closes:#151884).
+    * Do fixups from old version in preinst, not postinst. 
+      This fixes a problem where the old init.d script mangled the
+      newly installed files and left the package unusable.
+    * Really close all the bugs meant to be closed by 1.3.22pl1-1.
+      (closes:#143657) (closes:#143660)
+      (closes:#140288) (closes:#127773) (closes:#118039) (closes:#121208)
+    * Remove bashism from postinst. (closes:#151522)
+    * Update docs to reflect newer format of
+      /etc/network/interfaces
+  
+ -- Simon Kelley <simon@thekelleys.org.uk>  Weds,  10 Jun 2002 14:05:08 +0100
+
+dhcpcd (1:1.3.22pl1-1) unstable; urgency=low
+  
+    * New maintainer.
+    * New upstream. (closes:143657) (closes:143660)
+    * Removed /etc/init.d/dhcpcd. dhcpcd is now started by ifup or the pcmcia
+      package. This is corresponds with the mechanism used by pump.
+      (closes:140288) (closes:127773) (closes:118039) (closes:121208)
+    * Removed kernel 2.0.x support since debian now longer supports this
+      kernel series. The latest upstream now allows compilation for
+      2.0.x anyway, so the ancient and unsupported 0.70 source tree has gone
+      as well. 2.0.x users can recompile the source package.
+    * Added a wrapper (/sbin/dhcpcd) around the real binary (/sbin/dhcpcd-bin)
+      which allows options to be set in /etc/dhcpc/config. ifup allows
+      most common options to be set, but not some which may be useful, 
+      and dhcpcd doesn't natively support a config file.
+    * Do not allow dhcpcd to alter /etc/resolv.conf, /etc/ntp.conf or
+      /etc/yp.conf by default: these all need settings in 
+      /etc/dhcpc/config now. /etc/dhcpc/resolv.conf is still supported
+      for dnsmasq.
+    * Removed strange diversion of /etc/resolv.conf and /etc/ntp.conf
+      via symlinks.
+    * Patched upstream to remove security hole associated with shell
+      metachars in dhcpcd-<interface>.info. Without the patch talking to
+      a DHCP server which returned a domain name of eg `rm -rf /` would
+      cause big problems!
+  
+ -- Simon Kelley <simon@thekelleys.org.uk>  Tues,  11 Jun 2002 20:08:07 +0100
+  
+dhcpcd (1:1.3.17pl2-8) frozen unstable; urgency=low
+
+  * Add to frozen to avoid release with critical bugs
+
+ -- Dennis Kelly <dpk@debian.org>  Wed,  8 Mar 2000 11:04:04 -0500
+
+dhcpcd (1:1.3.17pl2-7) unstable; urgency=low
+
+  * Fixed init script for 2.0 kernels
+
+ -- Dennis Kelly <dpk@debian.org>  Tue, 22 Feb 2000 16:52:37 -0500
+
+dhcpcd (1:1.3.17pl2-6) unstable; urgency=low
+
+  * "-02" w/gcc >= 2.8 will cause dhcpcd to fail (closes: #56860, #43238)
+  * Change /sbin/dhcpcd to be a link instead of startup script so pid file
+    is created properly (closes: #53501)
+  * exit 0 if interface is set to "none" (closes: #55836)
+  * Hint in postinst for pcmcia-cs (closes: #55776, #33623)
+
+ -- Dennis Kelly <dpk@debian.org>  Fri, 18 Feb 2000 09:43:48 -0500
+
+dhcpcd (1:1.3.17pl2-5) unstable; urgency=low
+
+  * Support for 2.3.x kernels in dhcpcd script (closes: #46761)
+  * Use $@ instead of $* in dhcpcd script (closes: #46914)
+  * Do not delete dhcpcd-$IFACE.exe (closes: #48235)
+  * Do nothing in init script if no interface is configured (closes: #49814)
+
+ -- Dennis Kelly <dpk@debian.org>  Mon,  1 Nov 1999 10:02:11 -0500
+
+dhcpcd (1:1.3.17pl2-4) unstable; urgency=low
+
+  * Start dhcpcd if upgrading from versions <= 1:1.3.17pl2-2, as they stop
+    and start the daemon during upgrades (closes: #32078, #46355)
+  * postinst: resolv.conf and ntp.conf setup did not properly check files
+    when moving or copying to directories (closes: #30657, #35346, #46449)
+  * postinst: cleaned up configure code to report and handle interfaces
+    better (closes: #25293)
+  * made /sbin/dhcpcd a wrapper that calls either dhcpcd-2.0.x or
+    dhcpcd-2.2.x, depending on current running kernel to make the
+    pcmcia-cs package happy (closes: #31701, #45536)
+  * postinst: don't fail if no network is configured
+
+ -- Dennis Kelly <dpk@debian.org>  Mon,  1 Nov 1999 10:02:01 -0500
+
+dhcpcd (1:1.3.17pl2-3) unstable; urgency=low
+
+  * Reversed order of $IFACE and $OPTIONS in init script (closes: #33204)
+  * Moved dhcpcd daemons to /sbin (closes: #45536)
+  * Remove old pid, cache, and info files which cause failure at startup 
+    (closes: #34124, #35992)
+  * Removed annoying 'your IP address:' statement from console messages 
+    and really follow policy (closes: #32373, #34601)
+  * Don't restart during upgrade (#32078)
+  * Handle upgrades from previous versions using wrong init script
+    properly (closes: #46202)
+  * Updated README to at least include correct information regarding
+    the package
+  * Update configure script to actually list available interfaces
+
+ -- Dennis Kelly <dpk@debian.org>  Wed, 29 Sep 1999 11:40:32 -0400
+
+dhcpcd (1:1.3.17pl2-2) unstable; urgency=low
+
+  * New maintainer
+  * Purge now removes init script (closes: #32371)
+  * Console messages from init script now follow policy (closes: #32373)
+  * Testing DAEMON in init script follows defining it in case (closes: #34769)
+  * Removed 'source' bashism in init script (closes: #35343)
+  * Removed '==' bashism in postinst script (closes: #35402) 
+  * Fixed dhcpcd failing to start if pid file exists (closes: #32692)
+  * Remove old init script if it exists (closes: #33523)
+
+ -- Dennis Kelly <dpk@debian.org>  Mon, 27 Sep 1999 16:21:18 -0400
+
+dhcpcd (1:1.3.17pl2-1) unstable; urgency=low
+
+  * New upstream version of dhcpcd-sv
+  * Merged dhcpcd-sv and dhcpcd into same package.
+  * Fixes for unaligned writes on RISC architectures (sparc,arm)
+
+ -- Steve Dunham <dunham@debian.org>  Thu, 21 Jan 1999 19:45:53 -0500
+
+dhcpcd-sv (1.3.16-2) unstable; urgency=low
+
+  * Sparc fixes
+
+ -- Steve Dunham <dunham@debian.org>  Wed, 20 Jan 1999 01:36:31 -0500
+
+dhcpcd-sv (1.3.16-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Steve Dunham <dunham@debian.org>  Wed, 30 Dec 1998 18:42:17 -0500
+
+dhcpcd-sv (1.3.7-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Steve Dunham <dunham@debian.org>  Sat, 29 Aug 1998 20:27:27 -0400
+
+dhcpcd-sv (1.3.6-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Steve Dunham <dunham@debian.org>  Sat, 29 Aug 1998 20:27:27 -0400
+
