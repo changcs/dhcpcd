@@ -69,7 +69,7 @@ _RC_SH= if test -n "${HAVE_INIT}"; then \
 		 elif test -d /etc/init.d; then echo "-DENABLE_SYSV"; \
 		 fi
 _RC!= ${_RC_SH}
-RC= ${_RC}$(shell ${_RC_SH})
+RC= ${_RC} $(shell ${_RC_SH})
 
 # glibc requires _BSD_SOURCE and _XOPEN_SOURCE
 _DEF_SH=	case `uname -s` in Linux|GNU/kFreeBSD) echo "-D_BSD_SOURCE -D_XOPEN_SOURCE=600";; *) echo;; esac
