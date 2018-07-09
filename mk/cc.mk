@@ -7,7 +7,7 @@ CFLAGS?=	-O2
 CSTD?=		c99
 _CSTD_SH=	if test -n "${CSTD}"; then echo "-std=${CSTD}"; else echo ""; fi
 _CSTD!=		${_CSTD_SH}
-CFLAGS+=	${_CSTD}$(shell ${_CSTD_SH})
+CFLAGS+=	${_CSTD} $(shell ${_CSTD_SH})
 
 # Try and use some good cc flags
 _CC_FLAGS=	-pedantic -Wall -Wunused -Wimplicit -Wshadow -Wformat=2 \
