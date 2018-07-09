@@ -1,0 +1,11 @@
+* dhcpcd
+
+** DHCP client for automatically configuring IPv4 networking
+
+#+BEGIN_QUOTE
+To build the deb file, run
+
+$ export LANG=C LC_CTYPE=C
+
+$ dpkg-buildpackage -rfakeroot -b
+#+END_QUOTE
