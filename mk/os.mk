@@ -57,7 +57,7 @@ _INFODIR_SH= if test -n "${INFODIR}"; then \
 			  esac \
 			  fi
 _INFODIR!= ${_INFODIR_SH}
-INFOD?= ${_INFODIR}$(shell ${_INFODIR_SH})
+INFOD?= ${_INFODIR}
 
 # Work out how to restart services 
 _RC_SH= if test -n "${HAVE_INIT}"; then \
